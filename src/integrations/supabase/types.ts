@@ -14,16 +14,250 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          action: string
+          book_id: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          user_id: string
+        }
+        Insert: {
+          action?: string
+          book_id: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          book_id?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_logs_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      book_permissions: {
+        Row: {
+          book_id: string
+          created_at: string
+          id: string
+          student_group: Database["public"]["Enums"]["student_group"]
+        }
+        Insert: {
+          book_id: string
+          created_at?: string
+          id?: string
+          student_group: Database["public"]["Enums"]["student_group"]
+        }
+        Update: {
+          book_id?: string
+          created_at?: string
+          id?: string
+          student_group?: Database["public"]["Enums"]["student_group"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_permissions_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      books: {
+        Row: {
+          author: string
+          category: Database["public"]["Enums"]["book_category"]
+          cover_url: string | null
+          created_at: string
+          description: string | null
+          file_path: string
+          file_size: number | null
+          id: string
+          page_count: number | null
+          subject: string | null
+          title: string
+          updated_at: string
+          uploaded_by: string | null
+          year: number | null
+        }
+        Insert: {
+          author: string
+          category?: Database["public"]["Enums"]["book_category"]
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          file_path: string
+          file_size?: number | null
+          id?: string
+          page_count?: number | null
+          subject?: string | null
+          title: string
+          updated_at?: string
+          uploaded_by?: string | null
+          year?: number | null
+        }
+        Update: {
+          author?: string
+          category?: Database["public"]["Enums"]["book_category"]
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          page_count?: number | null
+          subject?: string | null
+          title?: string
+          updated_at?: string
+          uploaded_by?: string | null
+          year?: number | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string
+          id: string
+          student_group: Database["public"]["Enums"]["student_group"] | null
+          student_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name: string
+          id?: string
+          student_group?: Database["public"]["Enums"]["student_group"] | null
+          student_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string
+          id?: string
+          student_group?: Database["public"]["Enums"]["student_group"] | null
+          student_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reading_progress: {
+        Row: {
+          book_id: string
+          created_at: string
+          current_page: number
+          id: string
+          last_read_at: string
+          total_pages: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          book_id: string
+          created_at?: string
+          current_page?: number
+          id?: string
+          last_read_at?: string
+          total_pages?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          book_id?: string
+          created_at?: string
+          current_page?: number
+          id?: string
+          last_read_at?: string
+          total_pages?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reading_progress_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "student"
+      book_category:
+        | "anatomy"
+        | "physiology"
+        | "biochemistry"
+        | "pharmacology"
+        | "pathology"
+        | "microbiology"
+        | "forensic_medicine"
+        | "community_medicine"
+        | "surgery"
+        | "medicine"
+        | "pediatrics"
+        | "obstetrics_gynecology"
+        | "ophthalmology"
+        | "ent"
+        | "dermatology"
+        | "psychiatry"
+        | "radiology"
+        | "anesthesiology"
+        | "orthopedics"
+        | "other"
+      student_group: "year_1" | "year_2" | "year_3" | "year_4" | "year_5"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +384,31 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "student"],
+      book_category: [
+        "anatomy",
+        "physiology",
+        "biochemistry",
+        "pharmacology",
+        "pathology",
+        "microbiology",
+        "forensic_medicine",
+        "community_medicine",
+        "surgery",
+        "medicine",
+        "pediatrics",
+        "obstetrics_gynecology",
+        "ophthalmology",
+        "ent",
+        "dermatology",
+        "psychiatry",
+        "radiology",
+        "anesthesiology",
+        "orthopedics",
+        "other",
+      ],
+      student_group: ["year_1", "year_2", "year_3", "year_4", "year_5"],
+    },
   },
 } as const
