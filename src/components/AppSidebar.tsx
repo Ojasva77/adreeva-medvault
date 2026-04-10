@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { BookOpen, LayoutDashboard, Library, FolderOpen, User, Shield, Upload, Activity, LogOut, Settings } from "lucide-react";
+import { LayoutDashboard, Library, FolderOpen, User, Shield, Upload, Activity, LogOut, Settings, BookOpen } from "lucide-react";
+import adreevaLogo from "@/assets/adreeva-logo.jpeg";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -30,11 +31,11 @@ const AppSidebar = () => {
 
   return (
     <aside className="flex h-screen w-64 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
-      <div className="flex items-center gap-2 px-6 py-5 border-b border-sidebar-border">
-        <BookOpen className="h-7 w-7 text-sidebar-primary" />
-        <div>
-          <h1 className="text-lg font-bold text-sidebar-foreground">MedVault</h1>
-          <p className="text-xs text-sidebar-foreground/60">Adreeva University</p>
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-sidebar-border">
+        <img src={adreevaLogo} alt="Adreeva Logo" className="h-10 w-10 rounded-full object-cover" />
+        <div className="min-w-0">
+          <h1 className="text-sm font-bold text-sidebar-foreground leading-tight">Adreeva UCHP</h1>
+          <p className="text-xs text-sidebar-foreground/60">MedVault</p>
         </div>
       </div>
 

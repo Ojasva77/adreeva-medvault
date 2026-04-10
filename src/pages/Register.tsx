@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { BookOpen, Shield } from "lucide-react";
+import adreevaLogo from "@/assets/adreeva-logo.jpeg";
 import { Constants } from "@/integrations/supabase/types";
 
 const groupLabels: Record<string, string> = {
@@ -47,7 +47,6 @@ const Register = () => {
       return;
     }
 
-    // Update profile with student details after signup
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       await supabase.from("profiles").update({
@@ -64,13 +63,12 @@ const Register = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted p-4">
       <div className="w-full max-w-md space-y-6">
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-2 text-primary">
-            <BookOpen className="h-10 w-10" />
-            <Shield className="h-6 w-6 text-secondary" />
+        <div className="flex flex-col items-center gap-3">
+          <img src={adreevaLogo} alt="Adreeva University College of Health Professions" className="h-24 w-24 rounded-full object-cover" />
+          <div className="text-center">
+            <h1 className="text-xl font-bold text-foreground">Adreeva University College of Health Professions</h1>
+            <p className="text-sm text-muted-foreground mt-1">Create your student account</p>
           </div>
-          <h1 className="text-2xl font-bold text-foreground">Adreeva MedVault</h1>
-          <p className="text-sm text-muted-foreground">Create your student account</p>
         </div>
 
         <Card>
