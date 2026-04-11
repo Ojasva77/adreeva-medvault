@@ -9,7 +9,10 @@ import PdfHighlightLayer, { HighlightRect } from "@/components/pdf/PdfHighlightL
 import { toast } from "sonner";
 import type { Tables } from "@/integrations/supabase/types";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url
+).toString();
 
 const BookViewer = () => {
   const { id } = useParams<{ id: string }>();
