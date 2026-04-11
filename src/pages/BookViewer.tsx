@@ -17,7 +17,7 @@ const BookViewer = () => {
   const navigate = useNavigate();
 
   const [book, setBook] = useState<Tables<"books"> | null>(null);
-  const [pdfData, setPdfData] = useState<ArrayBuffer | null>(null);
+  const [pdfData, setPdfData] = useState<Uint8Array | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
