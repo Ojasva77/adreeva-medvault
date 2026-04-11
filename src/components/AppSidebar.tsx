@@ -4,6 +4,7 @@ import { LayoutDashboard, Library, FolderOpen, User, Shield, Upload, Activity, L
 import adreevaLogo from "@/assets/adreeva-logo.jpeg";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const AppSidebar = () => {
   const { role, profile, signOut } = useAuth();
@@ -28,14 +29,15 @@ const AppSidebar = () => {
   ];
 
   const links = isAdmin ? adminLinks : studentLinks;
+  const initials = (profile?.full_name || "U").split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
 
   return (
     <aside className="flex h-screen w-64 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-sidebar-border">
-        <img src={adreevaLogo} alt="Adreeva Logo" className="h-10 w-10 rounded-full object-cover" />
+      <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border">
+        <img src={adreevaLogo} alt="Adreeva Logo" className="h-10 w-10 rounded-lg object-cover shadow-sm" />
         <div className="min-w-0">
           <h1 className="text-sm font-bold text-sidebar-foreground leading-tight">Adreeva UCHP</h1>
-          <p className="text-xs text-sidebar-foreground/60">MedVault</p>
+          <p className="text-xs text-sidebar-primary font-medium">MedVault</p>
         </div>
       </div>
 
@@ -48,13 +50,13 @@ const AppSidebar = () => {
               key={link.to}
               to={link.to}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 active
-                  ? "bg-sidebar-accent text-sidebar-primary"
-                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                  ? "bg-sidebar-accent text-sidebar-primary shadow-sm"
+                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
               )}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className={cn("h-4 w-4", active && "text-sidebar-primary")} />
               {link.label}
             </Link>
           );
@@ -63,9 +65,10 @@ const AppSidebar = () => {
 
       <div className="border-t border-sidebar-border p-4">
         <div className="flex items-center gap-3 mb-3">
-          <div className="h-8 w-8 rounded-full bg-sidebar-accent flex items-center justify-center">
-            {isAdmin ? <Shield className="h-4 w-4 text-sidebar-primary" /> : <User className="h-4 w-4 text-sidebar-primary" />}
-          </div>
+          <Avatar className="h-9 w-9 border border-sidebar-border">
+            <AvatarImage src={profile?.avatar_url || undefined} />
+            <AvatarFallback className="bg-sidebar-accent text-sidebar-primary text-xs font-bold">{initials}</AvatarFallback>
+          </Avatar>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium truncate">{profile?.full_name || "User"}</p>
             <p className="text-xs text-sidebar-foreground/60 capitalize">{role || "student"}</p>
