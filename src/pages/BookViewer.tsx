@@ -20,7 +20,7 @@ const BookViewer = () => {
   const navigate = useNavigate();
 
   const [book, setBook] = useState<Tables<"books"> | null>(null);
-  const [pdfData, setPdfData] = useState<Uint8Array | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -42,9 +42,13 @@ const BookViewer = () => {
   useEffect(() => {
     if (!id || !user) return;
     let isActive = true;
+    let objectUrl: string | null = null;
 
     const fetchBook = async () => {
       setLoading(true);
+      setPdfUrl(null);
+      setErrorMessage(null);
+
       const { data, error: bookError } = await supabase
         .from("books")
         .select("*")
@@ -69,10 +73,9 @@ const BookViewer = () => {
         return;
       }
 
-      const originalBuffer = await fileData.arrayBuffer();
-      const buffer = originalBuffer.slice(0);
+      objectUrl = URL.createObjectURL(fileData);
       if (isActive) {
-        setPdfData(new Uint8Array(buffer));
+        setPdfUrl(objectUrl);
         setLoading(false);
       }
 
@@ -84,7 +87,10 @@ const BookViewer = () => {
     };
 
     void fetchBook();
-    return () => { isActive = false; };
+    return () => {
+      isActive = false;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
   }, [id, user, navigate]);
 
   // Load annotations
@@ -291,10 +297,10 @@ const BookViewer = () => {
         )}
 
         <div ref={containerRef} className="flex-1 overflow-auto bg-muted">
-          {pdfData ? (
+          {pdfUrl ? (
             <div className="flex justify-center py-4">
               <Document
-                file={{ data: pdfData }}
+                file={pdfUrl}
                 onLoadSuccess={onDocumentLoadSuccess}
                 loading={
                   <div className="flex items-center justify-center py-20">
