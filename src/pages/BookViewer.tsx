@@ -17,7 +17,7 @@ const BookViewer = () => {
   const navigate = useNavigate();
 
   const [book, setBook] = useState<Tables<"books"> | null>(null);
-  const [pdfData, setPdfData] = useState<ArrayBuffer | null>(null);
+  const [pdfData, setPdfData] = useState<Uint8Array | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -66,9 +66,10 @@ const BookViewer = () => {
         return;
       }
 
-      const buffer = await fileData.arrayBuffer();
+      const originalBuffer = await fileData.arrayBuffer();
+      const buffer = originalBuffer.slice(0);
       if (isActive) {
-        setPdfData(buffer);
+        setPdfData(new Uint8Array(buffer));
         setLoading(false);
       }
 
