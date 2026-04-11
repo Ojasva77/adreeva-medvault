@@ -3,8 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import "react-pdf/dist/esm/Page/TextLayer.css";
 import PdfToolbar from "@/components/pdf/PdfToolbar";
 import PdfSidebar, { BookmarkItem, NoteItem } from "@/components/pdf/PdfSidebar";
 import PdfHighlightLayer, { HighlightRect } from "@/components/pdf/PdfHighlightLayer";
