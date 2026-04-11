@@ -49,6 +49,120 @@ export type Database = {
           },
         ]
       }
+      book_bookmarks: {
+        Row: {
+          book_id: string
+          created_at: string
+          id: string
+          label: string | null
+          page_number: number
+          user_id: string
+        }
+        Insert: {
+          book_id: string
+          created_at?: string
+          id?: string
+          label?: string | null
+          page_number: number
+          user_id: string
+        }
+        Update: {
+          book_id?: string
+          created_at?: string
+          id?: string
+          label?: string | null
+          page_number?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_bookmarks_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      book_highlights: {
+        Row: {
+          book_id: string
+          color: string
+          created_at: string
+          id: string
+          page_number: number
+          position_data: Json
+          selected_text: string | null
+          user_id: string
+        }
+        Insert: {
+          book_id: string
+          color?: string
+          created_at?: string
+          id?: string
+          page_number: number
+          position_data: Json
+          selected_text?: string | null
+          user_id: string
+        }
+        Update: {
+          book_id?: string
+          color?: string
+          created_at?: string
+          id?: string
+          page_number?: number
+          position_data?: Json
+          selected_text?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_highlights_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      book_notes: {
+        Row: {
+          book_id: string
+          content: string
+          created_at: string
+          id: string
+          page_number: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          book_id: string
+          content: string
+          created_at?: string
+          id?: string
+          page_number: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          book_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          page_number?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_notes_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       book_permissions: {
         Row: {
           book_id: string
