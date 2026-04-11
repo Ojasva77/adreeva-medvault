@@ -66,9 +66,10 @@ const BookViewer = () => {
         return;
       }
 
-      const buffer = await fileData.arrayBuffer();
+      const originalBuffer = await fileData.arrayBuffer();
+      const buffer = originalBuffer.slice(0);
       if (isActive) {
-        setPdfData(buffer);
+        setPdfData(new Uint8Array(buffer));
         setLoading(false);
       }
 
